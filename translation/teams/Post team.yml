@@ -1,0 +1,20 @@
+info:
+  name: Post team
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{API_URL}}/teams"
+  body:
+    type: form-urlencoded
+    data:
+      - name: name
+        value: Test
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

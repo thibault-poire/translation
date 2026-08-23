@@ -1,0 +1,27 @@
+info:
+  name: Post user
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{API_URL}}/users"
+  body:
+    type: form-urlencoded
+    data:
+      - name: first_name
+        value: John
+        disabled: true
+      - name: last_name
+        value: Doe
+        disabled: true
+      - name: team_ids
+        value: "[]"
+        disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

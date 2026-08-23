@@ -1,0 +1,34 @@
+info:
+  name: Patch user
+  type: http
+  seq: 1
+
+http:
+  method: PATCH
+  url: "{{API_URL}}/users/:id"
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: form-urlencoded
+    data:
+      - name: first_name
+        value: ""
+        disabled: true
+      - name: last_name
+        value: ""
+        disabled: true
+      - name: team_ids[]
+        value: ""
+        disabled: true
+      - name: team_ids[]
+        value: ""
+        disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

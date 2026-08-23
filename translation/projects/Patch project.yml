@@ -1,0 +1,34 @@
+info:
+  name: Patch project
+  type: http
+  seq: 1
+
+http:
+  method: PATCH
+  url: "{{API_URL}}/projects/:id"
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: form-urlencoded
+    data:
+      - name: name
+        value: ""
+        disabled: true
+      - name: default_language_tag
+        value: ""
+        disabled: true
+      - name: team_ids[]
+        value: ""
+        disabled: true
+      - name: key_ids[]
+        value: ""
+        disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
