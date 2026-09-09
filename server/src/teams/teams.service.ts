@@ -1,12 +1,13 @@
+import { In, Repository } from "typeorm";
+
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
-import { In, Repository } from "typeorm";
-
 import { Project } from "src/projects/entities/project.entity";
-import { CreateTeamDto, PatchTeamDto } from "src/teams/dto/team.dto";
 import { Team } from "src/teams/entities/team.entity";
 import { User } from "src/users/entities/user.entity";
+
+import { CreateTeamDto, PatchTeamDto } from "src/teams/dto/team.dto";
 
 @Injectable()
 export class TeamsService {
@@ -21,7 +22,11 @@ export class TeamsService {
 
   async add_one({ project_ids, user_ids, ...properties }: CreateTeamDto) {
     const projects = project_ids?.length
-      ? { users: await this.project_repository.findBy({ id: In(project_ids) }) }
+      ? {
+          projects: await this.project_repository.findBy({
+            id: In(project_ids),
+          }),
+        }
       : {};
 
     const users = user_ids?.length
@@ -35,18 +40,28 @@ export class TeamsService {
     });
   }
 
-  async delete_one(id: number) {
+  async delete_one(id: string) {
+    const team = await this.team_repository.findOne({
+      where: { id },
+    });
+
+    if (!team) {
+      throw new NotFoundException();
+    }
+
     return await this.team_repository.delete(id);
   }
 
   async get_all() {
-    return await this.team_repository.find({ relations: { users: true } });
+    return await this.team_repository.find({
+      relations: { projects: true, users: true },
+    });
   }
 
-  async get_one(id: number) {
-    const team = await this.team_repository.find({
+  async get_one(id: string) {
+    const team = await this.team_repository.findOne({
       where: { id },
-      relations: { users: true },
+      relations: { projects: true, users: true },
     });
 
     if (!team) {
@@ -56,10 +71,7 @@ export class TeamsService {
     return team;
   }
 
-  async patch_one(
-    id: number,
-    { project_ids, user_ids, ...updates }: PatchTeamDto,
-  ) {
+  async patch_one(id: string, { project_ids, user_ids, ...updates }: PatchTeamDto) {
     const team = await this.team_repository.findOne({
       where: { id },
       relations: { projects: true, users: true },
@@ -70,7 +82,11 @@ export class TeamsService {
     }
 
     const projects = project_ids?.length
-      ? { users: await this.project_repository.findBy({ id: In(project_ids) }) }
+      ? {
+          projects: await this.project_repository.findBy({
+            id: In(project_ids),
+          }),
+        }
       : {};
 
     const users = user_ids?.length

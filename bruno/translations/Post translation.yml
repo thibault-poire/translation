@@ -1,0 +1,27 @@
+info:
+  name: Post translation
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{API_URL}}/translations"
+  body:
+    type: form-urlencoded
+    data:
+      - name: value
+        value: ""
+        disabled: true
+      - name: language_id
+        value: ""
+        disabled: true
+      - name: key_id
+        value: ""
+        disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

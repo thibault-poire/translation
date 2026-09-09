@@ -1,11 +1,12 @@
+import { In, Repository } from "typeorm";
+
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
-import { In, Repository } from "typeorm";
-
 import { Team } from "src/teams/entities/team.entity";
-import { CreateUserDto, type PatchUserDto } from "src/users/dto/user.dto";
 import { User } from "src/users/entities/user.entity";
+
+import { CreateUserDto, type PatchUserDto } from "src/users/dto/user.dto";
 
 @Injectable()
 export class UsersService {
@@ -24,7 +25,7 @@ export class UsersService {
     return this.user_repository.save({ ...properties, ...teams });
   }
 
-  async delete_one(id: number) {
+  async delete_one(id: string) {
     return this.user_repository.delete(id);
   }
 
@@ -36,7 +37,7 @@ export class UsersService {
     return projects;
   }
 
-  async get_one(id: number) {
+  async get_one(id: string) {
     const project = await this.user_repository.findOne({
       where: { id },
       relations: { teams: true },
@@ -49,7 +50,7 @@ export class UsersService {
     return project;
   }
 
-  async patch_one(id: number, { team_ids, ...updates }: PatchUserDto) {
+  async patch_one(id: string, { team_ids, ...updates }: PatchUserDto) {
     const user = await this.user_repository.findOne({
       where: { id },
       relations: { teams: true },

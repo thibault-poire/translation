@@ -1,0 +1,71 @@
+Project translations {
+  database_type: 'PostgreSQL'
+}
+
+Table projects {
+  id uuid [primary key, default: `gen_random_uuid()`]
+  name varchar(255) [unique]
+  default_language_id uuid [ref: > languages.id]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table project_team {
+  team_id uuid [ref: > teams.id]
+  project_id uuid [ref: > projects.id]
+}
+
+Table teams {
+  id uuid [primary key, default: `gen_random_uuid()`]
+  name varchar(255) [unique]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table team_user {
+  team_id uuid [ref: > teams.id]
+  user_id uuid [ref: > users.id]
+}
+
+
+Table users {
+  id uuid [primary key, default: `gen_random_uuid()`]
+  first_name varchar(255)
+  last_name varchar(255)
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+
+Table languages {
+  id uuid [primary key, default: `gen_random_uuid()`]
+  language_tag varchar(5) [unique]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Table keys {
+  id uuid [primary key, default: `gen_random_uuid()`]
+  name varchar(255)
+  description text [null]
+  project_id uuid [ref: > projects.id]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+
+  indexes {
+    (project_id, name) [unique]
+  }
+}
+
+Table translations {
+  id uuid [primary key, default: `gen_random_uuid()`]
+  value text
+  language_id uuid [ref: - languages.id]
+  key_id uuid [ref: > keys.id]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+
+  indexes {
+    (language_id, key_id) [unique]
+  }
+}

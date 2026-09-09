@@ -1,36 +1,32 @@
-import { Transform } from "class-transformer";
-import { IsArray, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
+import { IsArray, IsNotEmpty, IsOptional, IsUUID } from "class-validator";
 
 export class CreateTeamDto {
   @IsNotEmpty()
   name: string;
 
   @IsOptional()
-  @Transform(({ value }) => (Array.isArray(value) ? value.map(Number) : []))
   @IsArray()
-  @IsNumber({}, { each: true })
-  project_ids: number[];
+  @IsUUID("4", { each: true })
+  project_ids: string[];
 
   @IsOptional()
-  @Transform(({ value }) => (Array.isArray(value) ? value.map(Number) : []))
   @IsArray()
-  @IsNumber({}, { each: true })
-  user_ids: number[];
+  @IsUUID("4", { each: true })
+  user_ids: string[];
 }
 
 export class PatchTeamDto {
   @IsOptional()
+  @IsNotEmpty()
   name: string;
 
   @IsOptional()
-  @Transform(({ value }) => (Array.isArray(value) ? value.map(Number) : []))
   @IsArray()
-  @IsNumber({}, { each: true })
-  project_ids: number[];
+  @IsUUID("4", { each: true })
+  project_ids: string[];
 
   @IsOptional()
-  @Transform(({ value }) => (Array.isArray(value) ? value.map(Number) : []))
   @IsArray()
-  @IsNumber({}, { each: true })
-  user_ids: number[];
+  @IsUUID("4", { each: true })
+  user_ids: string[];
 }

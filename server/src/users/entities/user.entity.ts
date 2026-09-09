@@ -12,8 +12,8 @@ import { Team } from "src/teams/entities/team.entity";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column({ length: 255 })
   first_name: string;
@@ -29,7 +29,7 @@ export class User {
 
   @ManyToMany(() => Team, (team) => team.users)
   @JoinTable({
-    name: "user_team",
+    name: "team_user",
     joinColumn: {
       name: "user_id",
       referencedColumnName: "id",

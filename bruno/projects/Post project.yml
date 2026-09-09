@@ -10,11 +10,13 @@ http:
     type: form-urlencoded
     data:
       - name: name
-        value: Test
-      - name: default_language_tag
-        value: fr-FR
+        value: ""
+        disabled: true
+      - name: default_language_id
+        value: ""
+        disabled: true
       - name: team_ids
-        value: "[]"
+        value: ""
         disabled: true
   auth: inherit
 

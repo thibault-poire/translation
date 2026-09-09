@@ -5,22 +5,21 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
   Unique,
 } from "typeorm";
 
 import { Key } from "src/keys/entities/key.entity";
+import { Language } from "src/languages/entities/language.entity";
 
 @Entity()
-@Unique(["key", "language_tag"])
+@Unique(["key", "language"])
 export class Translation {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column({ type: "text" })
   value: string;
-
-  @Column({ length: 5 })
-  language_tag: string;
 
   @CreateDateColumn({
     name: "created_at",
@@ -36,6 +35,11 @@ export class Translation {
   })
   updated_at: Date;
 
-  @ManyToOne(() => Key, (key) => key.translations)
+  @ManyToOne(() => Language, (language) => language.translations)
+  @JoinColumn({ name: "language_id" })
+  language: Language;
+
+  @ManyToOne(() => Key, (key) => key.translations, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "key_id" })
   key: Key;
 }

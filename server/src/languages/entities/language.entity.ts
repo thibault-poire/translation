@@ -4,39 +4,39 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
-  JoinColumn,
+  OneToMany,
 } from "typeorm";
 
 import { Project } from "src/projects/entities/project.entity";
+import { Translation } from "src/translations/entities/translation.entity";
 
 @Entity()
 export class Language {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-  @Column({ length: 10, unique: true })
+  @Column({ length: 5, unique: true })
   language_tag: string;
 
   @CreateDateColumn({
     name: "created_at",
-
     type: "timestamp",
-
     default: () => "now()",
   })
   created_at: Date;
 
   @UpdateDateColumn({
     name: "updated_at",
-
     type: "timestamp",
-
     default: () => "now()",
   })
   updated_at: Date;
 
-  @OneToOne(() => Project)
-  @JoinColumn({ name: "project_id" })
-  project: Project;
+  @OneToMany(() => Project, (project) => project.default_language)
+  projects: Project[];
+
+  @OneToMany(() => Translation, (translation) => translation.language, {
+    cascade: true,
+  })
+  translations: Translation[];
 }

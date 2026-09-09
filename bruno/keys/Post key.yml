@@ -1,0 +1,33 @@
+info:
+  name: Post key
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{API_URL}}/keys"
+  body:
+    type: form-urlencoded
+    data:
+      - name: name
+        value: ""
+        disabled: true
+      - name: description
+        value: ""
+        disabled: true
+      - name: project_id
+        value: ""
+        disabled: true
+      - name: translations[]
+        value: ""
+        disabled: true
+      - name: translations[]
+        value: ""
+        disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

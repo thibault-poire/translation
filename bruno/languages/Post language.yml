@@ -1,0 +1,27 @@
+info:
+  name: Post language
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{API_URL}}/languages"
+  body:
+    type: form-urlencoded
+    data:
+      - name: language_tag
+        value: ""
+        disabled: true
+      - name: project_ids[]
+        value: ""
+        disabled: true
+      - name: translation_ids[]
+        value: ""
+        disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -8,21 +8,24 @@ import {
   JoinTable,
   OneToMany,
   JoinColumn,
+  ManyToOne,
 } from "typeorm";
 
 import { Key } from "src/keys/entities/key.entity";
+import { Language } from "src/languages/entities/language.entity";
 import { Team } from "src/teams/entities/team.entity";
 
 @Entity()
 export class Project {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column({ length: 255, unique: true })
   name: string;
 
-  @Column({ length: 5 })
-  default_language_tag: string;
+  @ManyToOne(() => Language, (language) => language.projects)
+  @JoinColumn({ name: "default_language_id" })
+  default_language: Language;
 
   @CreateDateColumn({
     name: "created_at",
@@ -53,6 +56,5 @@ export class Project {
   teams: Team[];
 
   @OneToMany(() => Key, (key) => key.project)
-  @JoinColumn({ name: "key_id" })
   keys: Key[];
 }

@@ -16,8 +16,8 @@ import { Translation } from "src/translations/entities/translation.entity";
 @Entity()
 @Unique(["project", "name"])
 export class Key {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column({ length: 255 })
   name: string;
@@ -40,9 +40,9 @@ export class Key {
   updated_at: Date;
 
   @ManyToOne(() => Project, (project) => project.keys)
+  @JoinColumn({ name: "project_id" })
   project: Project;
 
   @OneToMany(() => Translation, (translation) => translation.key)
-  @JoinColumn({ name: "translation_id" })
   translations: Translation[];
 }

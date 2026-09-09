@@ -1,13 +1,12 @@
 {
-  "editor.renderWhitespace": "boundary",
-  "eslint.format.enable": true,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "oxc.enable": true,
+  "oxc.enable.oxfmt": true,
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+  "editor.formatOnSaveMode": "file",
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
-  "js/ts.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
-  "[javascript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
+  "[json]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  }
 }
